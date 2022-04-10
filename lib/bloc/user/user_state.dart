@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:manage_user_bloc/models/user.dart';
 
-class UserState extends Equatable {
+abstract class UserState extends Equatable {
   const UserState();
 
   @override

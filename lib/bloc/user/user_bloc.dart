@@ -12,7 +12,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   @override
   Stream<UserState> mapEventToState(UserEvent event) async* {
-    yield* _mapUserToState(event);
+    if(event is GetUserEvent) {
+      yield* _mapUserToState(event);
+    }
   }
 
   Stream<UserState> _mapUserToState(UserEvent event) async* {
@@ -22,11 +24,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       List<User> listUsers = await userRepository.getUsers();
       debugPrint("UserEvent -> Loaded");
-      if (listUsers.isNotEmpty) {
-        yield UserLoadedState(listUser: listUsers);
-      } else {
-        yield const UserErrorState(error: "Error");
-      }
+      yield UserLoadedState(listUser: listUsers);
     } catch (error) {
       debugPrint("UserEvent -> Error: ${error.toString()}");
       yield UserErrorState(error: error.toString());

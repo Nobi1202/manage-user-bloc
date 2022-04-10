@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class UserEvent extends Equatable {
+abstract class UserEvent extends Equatable {
   const UserEvent();
 
   @override
