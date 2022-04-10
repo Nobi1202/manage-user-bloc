@@ -31,26 +31,24 @@ class _HomePageScreenState extends State<HomePageScreen> {
         ),
         centerTitle: true,
       ),
-      body: BlocBuilder<UserBloc, UserState>(
-        // listener: (context, state) {
-        //   if (state is UserLoadingState) {
-        //     LoadingHelper.showLoading(context);
-        //   } else if (state is UserLoadedState) {
-        //     List<User> listUser = state.listUser;
-        //     print(listUser[0].userName);
-        //     LoadingHelper.hideLoading(context);
-        //   } else if (state is UserErrorState) {
-        //     LoadingHelper.hideLoading(context);
-        //     DialogHelper.showAlertDialog(
-        //       context: context,
-        //       message: state.error,
-        //       title: "Error",
-        //     );
-        //   }
-        // },
-        // buildWhen: (context, state) {
-        //   return state is UserLoadingState || state is UserLoadedState;
-        // },
+      body: BlocConsumer<UserBloc, UserState>(
+        listener: (context, state) async {
+          if (state is UserLoadingState) {
+            LoadingHelper.showLoading(context);
+          } else if (state is UserLoadedState) {
+            LoadingHelper.hideLoading(context);
+          } else if (state is UserErrorState) {
+            LoadingHelper.hideLoading(context);
+            DialogHelper.showAlertDialog(
+              context: context,
+              message: state.error,
+              title: "Error",
+            );
+          }
+        },
+        buildWhen: (context, state) {
+          return state is UserLoadedState || state is UserLoadingState;
+        },
         builder: (context, state) {
           if (state is UserLoadedState) {
             _listUsers = state.listUser;
@@ -133,16 +131,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   ),
                 ),
               ),
-            );
-          } else if (state is UserLoadingState) {
-            const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state is UserErrorState) {
-            DialogHelper.showAlertDialog(
-              context: context,
-              message: state.error,
-              title: "Error",
             );
           }
           return Center(

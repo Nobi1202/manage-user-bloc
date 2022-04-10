@@ -17,8 +17,8 @@ dependencies:
   #bloc
   flutter_bloc: ^7.1.0
   equatable: ^2.0.3
-  #loader_overlay
-  loader_overlay: ^2.0.4+3
+  #loader_overlay:
+  loader_overlay: ^2.0.5+1
   #http:
   http:
   #adaptive_dialog:
